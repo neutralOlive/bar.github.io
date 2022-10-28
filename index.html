@@ -20,21 +20,33 @@
         }
 
         #container {
-            /* text-align:center; */
+            text-align: center;
+            /* display: flex; */
             /* left: 28%; */
             margin: auto;
             /* 25%; */
             width: 95%;
+            height: 35px;
+            /* vertical-align: middle; */
+            /* padding: auto; */
+            justify-content: center;
+            /* align-items: center; */
+            /* top: 50%; */
+            /* transform: translate(0, -50%); */
 
+            display: flex;
+            align-items: center;
         }
 
         #progress-bar {
-            display: inline-block;
+            display: flex;
             /* background-color: #F8F8F8; 이거임        */
             /* width: 430px; 1028이거 */
+            /* 1028 원ㄹㅐ 40임 height */
+            /* margin: auto; */
             width: 90%;
             /* 500 */
-            height: 40px;
+            height: 35px;
             /* 45 */
             border: 1px solid white;
             /* border-radius: 20px; */
@@ -79,14 +91,14 @@
 
             /* width: 120px; */
             width: 0px;
-            height: 40px; 
+            height: 35px; 
             /* //55 */
             display: inline-block;
-
+            float: left;
         }
 
         #progress-text {
-            display: inline-block;
+            display: flex;
             vertical-align: middle;
             /* margin-top: 5px; */
             /* word-spacing: 50%; */
@@ -105,6 +117,8 @@
             /* margin-bottom: 50%; */
             margin-right: 25px;
             width: 5%;
+            line-height: 35px;
+            
         }
 
     </style>
@@ -126,23 +140,10 @@
     <script src="NoSleep.min.js"></script>
 
     <script>
-        // // iOS: 
-        // // https://github.com/richtr/NoSleep.js
-        // var noSleep = new NoSleep();
-        // // Enable wake lock.
-        // // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
-        // // document.addEventListener('click', function enableNoSleep() {
-        // window.addEventListener('load', (event) => {
-        //     // document.removeEventListener('click', enableNoSleep, false);
-        //     noSleep.enable();
-        //     console.log("noSleep enabled");
-        //     showSavedAlert();
-        // });
-
         // let timerSeconds = 10;
         var progressText = document.getElementById("progress-text");
         var progress = document.getElementById("progress");
-        var value = 1500// 10;
+        var value = 5; //1500// 10;
         var count = 0;
         // var newText = formatTime(timerSeconds);
         // var percent = 100-((seconds/timerSeconds)*100);
@@ -206,7 +207,7 @@
             progress.style.width = percentBar + "%";
             progressText.textContent = width + "%";
             // console.log(percentBar, width);
-            if (percentBar >= 100) {//100이 이상함..
+            if (percentBar >= 100) { // 100이 이상함..
                 clearInterval(timer);
             }
         }
@@ -247,16 +248,49 @@
             }
         }
 
+        // // iOS: 
+        // // https://github.com/richtr/NoSleep.js
         var noSleep = new NoSleep();
         // Enable wake lock.
         // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
         document.addEventListener('click', function enableNoSleep() {
         // window.addEventListener('load', (event) => {
-            // document.removeEventListener('click', enableNoSleep, false);
+            document.removeEventListener('click', enableNoSleep, false);
             noSleep.enable();
             console.log("noSleep enabled");
             showSavedAlert();
         });
+
+        function removeAlertLayer(savedAlertLayer) {
+            // credit: https://stackoverflow.com/questions/33424138/how-to-remove-a-div-with-fade-out-effect-in-javascript
+            speed = 2500;
+            var seconds = speed/1000;
+            savedAlertLayer.style.transition = "opacity "+seconds+"s ease";
+            savedAlertLayer.style.opacity = 0;
+            setTimeout(function() {
+                savedAlertLayer.parentNode.removeChild(savedAlertLayer);
+            }, speed);
+        }
+
+        function showSavedAlert() {
+            var savedAlertLayer = document.createElement("DIV");
+            savedAlertLayer.appendChild(document.createTextNode("No Sleep"));
+            savedAlertLayer.style.position = 'absolute';
+            savedAlertLayer.style.left = '10px';
+            savedAlertLayer.style.top = '30px';
+            savedAlertLayer.style.width = '700px';
+            savedAlertLayer.style.height = '100px';
+            savedAlertLayer.style.fontSize = "20px";
+            savedAlertLayer.style.padding = '15px';
+            savedAlertLayer.style.fontWeight = "bold";
+            savedAlertLayer.style.color = "white";
+            document.body.appendChild(savedAlertLayer);
+            setTimeout(function() {
+                removeAlertLayer(savedAlertLayer);
+            }, 1000);
+        }
+        
+
     </script>
 </body>
 </html>
