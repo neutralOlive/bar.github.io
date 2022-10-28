@@ -21,14 +21,18 @@
 
         #container {
             /* text-align:center; */
-            left: 28%;
+            /* left: 28%; */
+            margin: auto;
             /* 25%; */
+            width: 95%;
+
         }
 
         #progress-bar {
             display: inline-block;
             /* background-color: #F8F8F8; 이거임        */
-            width: 430px;
+            /* width: 430px; 1028이거 */
+            width: 90%;
             /* 500 */
             height: 40px;
             /* 45 */
@@ -100,6 +104,7 @@
             /* height: 60px; */
             /* margin-bottom: 50%; */
             margin-right: 25px;
+            width: 5%;
         }
 
     </style>
@@ -118,6 +123,8 @@
     </div>
 
     <!-- <script src="NoSleep.min.js"></script> -->
+    <script src="NoSleep.min.js"></script>
+
     <script>
         // // iOS: 
         // // https://github.com/richtr/NoSleep.js
@@ -239,6 +246,17 @@
                 progressText.textContent = width + "%";
             }
         }
+
+        var noSleep = new NoSleep();
+        // Enable wake lock.
+        // (must be wrapped in a user input event handler e.g. a mouse or touch handler)
+        document.addEventListener('click', function enableNoSleep() {
+        // window.addEventListener('load', (event) => {
+            // document.removeEventListener('click', enableNoSleep, false);
+            noSleep.enable();
+            console.log("noSleep enabled");
+            showSavedAlert();
+        });
     </script>
 </body>
 </html>
